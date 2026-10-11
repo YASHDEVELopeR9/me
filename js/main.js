@@ -15,12 +15,33 @@ import { modals } from './modals.js';
 class App {
   async init() {
     this.setupAudioWakeup();
-    await this.loadData();
-    await this.runLoader();
-    this.initComponents();
-    this.setupScrollObserver();
-    this.setupCharacterBar();
-    this.setupRunicHover();
+
+    // Direct click-to-dismiss on loader
+    const loader = document.getElementById('realm-loader');
+    if (loader) {
+      loader.addEventListener('click', () => this.hideLoader());
+    }
+
+    // Safety timeout: Guarantee loader dismisses even if anything hangs
+    setTimeout(() => this.hideLoader(), 2500);
+
+    try {
+      // Parallelize data fetch and loader sequence
+      const dataPromise = this.loadData();
+      const loaderPromise = this.runLoader();
+
+      await dataPromise;
+      this.initComponents();
+      this.setupScrollObserver();
+      this.setupCharacterBar();
+      this.setupRunicHover();
+
+      await loaderPromise;
+    } catch (err) {
+      console.error('[App] Init encountered error:', err);
+    } finally {
+      this.hideLoader();
+    }
   }
 
   setupAudioWakeup() {
@@ -38,6 +59,7 @@ class App {
   async loadData() {
     try {
       const res = await fetch('data/profile.json');
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       state.set('profileData', data);
     } catch (err) {
@@ -46,28 +68,38 @@ class App {
   }
 
   async runLoader() {
-    const loader = document.getElementById('realm-loader');
     const barFill = document.getElementById('loader-bar-fill');
     const statusText = document.getElementById('loader-status');
 
-    if (!loader || !barFill) return;
-
     const stages = [
-      { progress: 20, text: 'GENERATING CHERRY CANOPY...' },
-      { progress: 45, text: 'SYNTHESIZING WEB AUDIO FREQUENCIES...' },
+      { progress: 25, text: 'GENERATING CHERRY CANOPY...' },
+      { progress: 50, text: 'SYNTHESIZING WEB AUDIO FREQUENCIES...' },
       { progress: 75, text: 'SUMMONING 3D VOXEL AVATAR...' },
       { progress: 100, text: 'REALM READY! SPAWNING CRAFTER...' }
     ];
 
     for (const stage of stages) {
-      barFill.style.width = `${stage.progress}%`;
+      if (barFill) barFill.style.width = `${stage.progress}%`;
       if (statusText) statusText.textContent = stage.text;
-      await new Promise(r => setTimeout(r, 140));
+      await new Promise(r => setTimeout(r, 120));
     }
 
-    await new Promise(r => setTimeout(r, 200));
-    loader.classList.add('hidden');
-    audio.playXP();
+    await new Promise(r => setTimeout(r, 150));
+    this.hideLoader();
+  }
+
+  hideLoader() {
+    const loader = document.getElementById('realm-loader');
+    if (loader && !loader.classList.contains('hidden')) {
+      const barFill = document.getElementById('loader-bar-fill');
+      if (barFill) barFill.style.width = '100%';
+      const statusText = document.getElementById('loader-status');
+      if (statusText) statusText.textContent = 'REALM READY! SPAWNING CRAFTER...';
+      loader.classList.add('hidden');
+      try {
+        audio.playXP();
+      } catch (e) {}
+    }
   }
 
   initComponents() {
@@ -212,8 +244,15 @@ class App {
   }
 }
 
-// Global bootstrap
-document.addEventListener('DOMContentLoaded', () => {
+// Global bootstrap with state check
+function startApp() {
   const app = new App();
   app.init();
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', startApp);
+} else {
+  startApp();
+}
+

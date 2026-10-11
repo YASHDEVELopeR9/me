@@ -25,6 +25,27 @@
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/hud.css">
   <link rel="stylesheet" href="css/modals.css">
+
+  <!-- Import Map for Three.js & Addons -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+
+  <!-- Module Preloads -->
+  <link rel="modulepreload" href="js/main.js">
+  <link rel="modulepreload" href="js/state.js">
+  <link rel="modulepreload" href="js/audio.js">
+  <link rel="modulepreload" href="js/particles.js">
+  <link rel="modulepreload" href="js/character.js">
+  <link rel="modulepreload" href="js/emotes.js">
+  <link rel="modulepreload" href="js/hud.js">
+  <link rel="modulepreload" href="js/modals.js">
+  <link rel="preload" href="data/profile.json" as="fetch" crossorigin="anonymous">
 </head>
 <body>
 
@@ -39,7 +60,7 @@
   <!-- ========================================================================
        REALM LOADER (Block-Style Loading Screen)
        ======================================================================== -->
-  <div id="realm-loader" role="progressbar" aria-label="Loading Cherry Grove Realm">
+  <div id="realm-loader" role="progressbar" aria-label="Loading Cherry Grove Realm" title="Click anywhere to enter">
     <div class="loader-title">
       BUILDING CHERRY GROVE REALM...<br>
       <span class="text-gold" style="font-size: 0.8rem;">SURVIVAL GUIDE V1.0.0</span>
@@ -48,6 +69,7 @@
       <div id="loader-bar-fill" class="loader-bar-fill"></div>
     </div>
     <div id="loader-status" class="loader-status">INITIALIZING VOXELS...</div>
+    <div style="font-family: var(--font-pixel, monospace); font-size: 0.65rem; color: #ff9ebb; opacity: 0.75; cursor: pointer; margin-top: 4px;">[ Click anywhere to enter realm ]</div>
   </div>
 
   <!-- ========================================================================
@@ -932,6 +954,23 @@
       <button id="btn-respawn" class="mc-button accent pause-btn">Respawn / Return to Top</button>
     </div>
   </div>
+
+  <!-- Fail-Safe Loader Dismissal: Ensures visitor is never stuck on loading screen -->
+  <script>
+    (function() {
+      var loader = document.getElementById('realm-loader');
+      if (loader) {
+        loader.addEventListener('click', function() {
+          loader.classList.add('hidden');
+        });
+        setTimeout(function() {
+          if (loader && !loader.classList.contains('hidden')) {
+            loader.classList.add('hidden');
+          }
+        }, 2200);
+      }
+    })();
+  </script>
 
   <!-- Main ES Module Script -->
   <script type="module" src="js/main.js"></script>

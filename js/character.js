@@ -5,9 +5,10 @@
  * breathing idle, cursor tracking, OrbitControls, and performance guards.
  */
 
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
-import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js';
 import { state } from './state.js';
+
+let THREE = null;
+let OrbitControls = null;
 
 class MinecraftCharacter {
   constructor() {
@@ -53,12 +54,27 @@ class MinecraftCharacter {
     this.disposed = false;
   }
 
-  init(containerId = 'character-container', canvasId = 'character-canvas') {
+  async init(containerId = 'character-container', canvasId = 'character-canvas') {
     this.container = document.getElementById(containerId);
     this.canvas = document.getElementById(canvasId);
     if (!this.container || !this.canvas) return;
 
     try {
+      if (!THREE) {
+        try {
+          THREE = await import('three');
+          try {
+            const controlsModule = await import('three/addons/controls/OrbitControls.js');
+            OrbitControls = controlsModule.OrbitControls;
+          } catch (cErr) {
+            console.warn('[Character] OrbitControls addon import skipped:', cErr);
+          }
+        } catch (importErr) {
+          console.warn('[Character] ImportMap three load failed, attempting direct CDN import:', importErr);
+          THREE = await import('https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js');
+        }
+      }
+
       this.setupRenderer();
       this.setupScene();
       this.setupCamera();
@@ -76,14 +92,16 @@ class MinecraftCharacter {
   }
 
   setupRenderer() {
+    const width = this.container.clientWidth || 360;
+    const height = this.container.clientHeight || 420;
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
       antialias: true,
       alpha: true,
       powerPreference: 'high-performance'
     });
-    this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.renderer.setSize(width, height);
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   }
@@ -93,7 +111,9 @@ class MinecraftCharacter {
   }
 
   setupCamera() {
-    const aspect = this.container.clientWidth / this.container.clientHeight;
+    const width = this.container.clientWidth || 360;
+    const height = this.container.clientHeight || 420;
+    const aspect = width / height;
     this.camera = new THREE.PerspectiveCamera(40, aspect, 0.1, 100);
     this.camera.position.set(0, 4, 38);
   }
@@ -517,6 +537,22 @@ class MinecraftCharacter {
     this.scene.add(this.root);
   }
 
+  setupControls() {
+    if (OrbitControls && this.camera && this.renderer) {
+      try {
+        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+        this.controls.enableDamping = true;
+        this.controls.dampingFactor = 0.05;
+        this.controls.enablePan = false;
+        this.controls.minDistance = 15;
+        this.controls.maxDistance = 60;
+        this.controls.maxPolarAngle = Math.PI / 2 + 0.1;
+      } catch (e) {
+        console.warn('[Character] OrbitControls setup skipped:', e);
+      }
+    }
+  }
+
   setupEvents() {
     // Window Resize
     window.addEventListener('resize', () => this.onResize());
@@ -553,8 +589,8 @@ class MinecraftCharacter {
 
   onResize() {
     if (!this.container || !this.renderer || !this.camera) return;
-    const w = this.container.clientWidth;
-    const h = this.container.clientHeight;
+    const w = this.container.clientWidth || 360;
+    const h = this.container.clientHeight || 420;
     this.camera.aspect = w / h;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(w, h);
