@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges">
+  <!-- Gold outer casing -->
+  <circle cx="16" cy="16" r="13" fill="#e9b115"/>
+  <circle cx="16" cy="16" r="11" fill="#be8b08"/>
+  <circle cx="16" cy="16" r="9" fill="#111625"/>
+  <!-- Dial half day / half night -->
+  <path d="M 7,16 A 9,9 0 0,1 25,16 Z" fill="#4ea8de"/>
+  <!-- Sun and stars -->
+  <circle cx="16" cy="11" r="3" fill="#ffe066"/>
+  <rect x="11" y="21" width="2" height="2" fill="#ffffff"/>
+  <rect x="20" y="22" width="2" height="2" fill="#ffffff"/>
+  <!-- Top watch loop -->
+  <rect x="14" y="1" width="4" height="3" fill="#be8b08"/>
+</svg>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges">
+  <!-- Book base (purple shimmer) -->
+  <rect x="6" y="5" width="20" height="22" rx="1" fill="#78345c"/>
+  <!-- Leather cover corner and spine -->
+  <rect x="5" y="6" width="3" height="20" fill="#4a1532"/>
+  <!-- Pages edge -->
+  <rect x="23" y="7" width="2" height="18" fill="#eae2b7"/>
+  <!-- Ribbon bookmark -->
+  <rect x="14" y="4" width="4" height="25" fill="#c1121f"/>
+  <polygon points="14,29 16,27 18,29" fill="#780000"/>
+  <!-- Gold corner brackets -->
+  <rect x="7" y="5" width="3" height="3" fill="#ffd166"/>
+  <rect x="22" y="5" width="3" height="3" fill="#ffd166"/>
+  <rect x="7" y="24" width="3" height="3" fill="#ffd166"/>
+  <rect x="22" y="24" width="3" height="3" fill="#ffd166"/>
+  <!-- Enchantment purple glint overlay -->
+  <polygon points="7,8 23,24 21,26 5,10" fill="#df7aff" opacity="0.45"/>
+  <polygon points="12,5 24,17 22,19 10,7" fill="#df7aff" opacity="0.35"/>
+</svg>

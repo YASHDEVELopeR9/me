@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges">
+  <!-- Leather book base -->
+  <rect x="4" y="8" width="18" height="20" fill="#6a381f"/>
+  <rect x="6" y="10" width="15" height="17" fill="#edd9b4"/>
+  <!-- Ink lines on book -->
+  <rect x="8" y="13" width="10" height="2" fill="#4a2e1b"/>
+  <rect x="8" y="17" width="8" height="2" fill="#4a2e1b"/>
+  <rect x="8" y="21" width="10" height="2" fill="#4a2e1b"/>
+  <!-- White feather quill diagonal -->
+  <polygon points="26,3 29,6 18,22 15,22 15,19" fill="#f8f9fa"/>
+  <polygon points="26,3 28,5 20,17 18,17" fill="#dee2e6"/>
+  <!-- Quill vane barbs -->
+  <polygon points="23,5 27,9 25,11 21,7" fill="#ffffff"/>
+  <!-- Ink nib tip -->
+  <polygon points="15,22 17,22 14,26" fill="#1b1b1b"/>
+  <!-- Ink drop -->
+  <rect x="13" y="26" width="2" height="2" fill="#1b1b1b"/>
+</svg>

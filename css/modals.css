@@ -1,0 +1,483 @@
+/* ==========================================================================
+   MODALS.CSS - Yash Vishwakarma "SURVIVAL GUIDE V1.0.0"
+   Minecraft Dialog Panels, Tabs, Book & Quill, Quest Contract & Emote Wheel
+   ========================================================================== */
+
+/* Native <dialog> and Modal Overlays */
+dialog {
+  border: none;
+  background: transparent;
+  padding: 0;
+  max-width: 90vw;
+  max-height: 90vh;
+  margin: auto;
+  position: fixed;
+  inset: 0;
+  z-index: 9900;
+  overflow: visible;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(3px);
+}
+
+.modal-frame {
+  background-color: var(--mc-panel-bg);
+  border: 4px solid #000000;
+  box-shadow: 
+    inset 4px 4px 0 var(--mc-stone-light),
+    inset -4px -4px 0 var(--mc-stone-shadow),
+    0 16px 40px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  max-height: 85vh;
+  width: min(92vw, 760px);
+  overflow: hidden;
+  position: relative;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background-color: #373737;
+  border-bottom: 3px solid #000000;
+  box-shadow: inset 0 2px 0 #555555;
+  color: #ffffff;
+}
+
+.modal-title {
+  font-family: var(--font-pixel);
+  font-size: 0.85rem;
+  text-shadow: 2px 2px 0 #000000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.modal-close-btn {
+  width: 32px;
+  height: 32px;
+  background-color: #c1121f;
+  border: 2px solid #000000;
+  box-shadow: inset 2px 2px 0 #ff4d6d, inset -2px -2px 0 #780000;
+  color: #ffffff;
+  font-family: var(--font-pixel);
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.modal-close-btn:hover {
+  filter: brightness(1.2);
+}
+
+.modal-body {
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ==========================================================================
+   TABS INTERFACE (CREDENTIALS PANEL)
+   ========================================================================== */
+.mc-tabs-header {
+  display: flex;
+  gap: 4px;
+  border-bottom: 3px solid #000000;
+  padding: 0 12px;
+  background: #2b2b2b;
+  overflow-x: auto;
+}
+
+.mc-tab-btn {
+  font-family: var(--font-pixel);
+  font-size: 0.65rem;
+  padding: 10px 14px;
+  background: #555555;
+  color: #aaaaaa;
+  border: 2px solid #000000;
+  border-bottom: none;
+  box-shadow: inset 2px 2px 0 #777777, inset -2px 0 0 #333333;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.1s ease;
+}
+
+.mc-tab-btn:hover {
+  color: #ffffff;
+  background: #666666;
+}
+
+.mc-tab-btn.active {
+  background: var(--mc-panel-bg);
+  color: #3f3f3f;
+  box-shadow: inset 2px 2px 0 var(--mc-stone-light), inset -2px 0 0 var(--mc-stone-shadow);
+  margin-top: -3px;
+  padding-top: 13px;
+}
+
+[data-theme="night"] .mc-tab-btn.active {
+  color: #ffffff;
+}
+
+.tab-pane {
+  display: none;
+}
+.tab-pane.active {
+  display: block;
+}
+
+/* Certificates Grid */
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.cert-card {
+  background: #373737;
+  border: 3px solid #000000;
+  box-shadow: inset 3px 3px 0 #555555, inset -3px -3px 0 #1e1e1e;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #ffffff;
+  transition: transform 0.1s ease;
+}
+
+.cert-card:hover {
+  filter: brightness(1.15);
+}
+
+.cert-badge {
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  color: #ffff55;
+}
+
+.cert-title {
+  font-family: var(--font-pixel);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: #ffffff;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.cert-issuer {
+  font-family: var(--font-retro);
+  font-size: 1.3rem;
+  color: #64dfdf;
+}
+
+.cert-skills-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.cert-tag {
+  background: #1e1e1e;
+  padding: 2px 6px;
+  font-size: 0.75rem;
+  border: 1px solid #444;
+}
+
+/* Quests Milestones */
+.quest-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.quest-node {
+  background: #373737;
+  border: 3px solid #000000;
+  box-shadow: inset 3px 3px 0 #555555, inset -3px -3px 0 #1b1b1b;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: #ffffff;
+}
+
+.quest-xp-badge {
+  font-family: var(--font-pixel);
+  font-size: 0.75rem;
+  color: var(--mc-xp-green);
+  text-shadow: 2px 2px 0 #000;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   BOOK & QUILL (CONTACT) UI
+   ========================================================================== */
+.book-quill-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  background: #eae2d0;
+  border: 8px solid #4a2810;
+  box-shadow: 
+    inset 4px 4px 0 #fff0d4,
+    inset -4px -4px 0 #b39268,
+    0 16px 40px rgba(0, 0, 0, 0.8);
+  padding: 24px;
+  color: #2b1b17;
+  position: relative;
+}
+
+.book-quill-container::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 50%;
+  width: 2px;
+  background: #b39268;
+  transform: translateX(-50%);
+}
+
+.book-page {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+}
+
+.book-page-num {
+  font-family: var(--font-retro);
+  font-size: 1.4rem;
+  color: #8c6849;
+  text-align: right;
+  margin-top: auto;
+}
+
+.book-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.book-field-label {
+  font-family: var(--font-pixel);
+  font-size: 0.65rem;
+  color: #4a2810;
+}
+
+.book-input, .book-textarea, .book-select {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  padding: 8px 10px;
+  background: #fbf8ef;
+  border: 2px solid #8c6849;
+  color: #1a100b;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.book-input:focus, .book-textarea:focus, .book-select:focus {
+  border-color: #c1121f;
+  background: #ffffff;
+}
+
+.book-textarea {
+  resize: vertical;
+  min-height: 140px;
+  line-height: 1.5;
+}
+
+.book-char-count {
+  font-size: 0.75rem;
+  color: #8c6849;
+  text-align: right;
+}
+
+.wax-seal-btn {
+  background: #9d0208;
+  color: #ffffff;
+  border: 3px solid #370617;
+  box-shadow: inset 2px 2px 0 #dc2f02, inset -2px -2px 0 #6a040f;
+  padding: 12px;
+  font-family: var(--font-pixel);
+  font-size: 0.75rem;
+  cursor: pointer;
+  text-align: center;
+  transition: filter 0.15s ease;
+}
+
+.wax-seal-btn:hover {
+  filter: brightness(1.2);
+}
+
+/* ==========================================================================
+   HIRE FOR THE QUEST CONTRACT DIALOG
+   ========================================================================== */
+.contract-scroll {
+  background: #2b2219;
+  border: 6px solid #140d08;
+  box-shadow: 
+    inset 4px 4px 0 #4a382b,
+    inset -4px -4px 0 #100b07;
+  padding: 24px;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.chip-selection-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.contract-chip {
+  background: #3f3123;
+  border: 2px solid #000000;
+  box-shadow: inset 2px 2px 0 #634e38, inset -2px -2px 0 #211911;
+  color: #ffd6a5;
+  font-family: var(--font-pixel);
+  font-size: 0.65rem;
+  padding: 8px 12px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.1s ease;
+}
+
+.contract-chip:hover {
+  background: #4f3e2d;
+}
+
+.contract-chip.selected {
+  background: #2d6a4f;
+  box-shadow: inset 2px 2px 0 #52b788, inset -2px -2px 0 #1b4332;
+  color: #ffffff;
+  outline: 2px solid #52b788;
+}
+
+/* ==========================================================================
+   EMOTE WHEEL RADIAL UI
+   ========================================================================== */
+#emote-wheel-dialog {
+  width: 440px;
+  height: 440px;
+}
+
+.emote-wheel-container {
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #2b1d28 40%, #150d14 100%);
+  border: 4px solid #ff758f;
+  box-shadow: 
+    0 0 24px rgba(255, 117, 143, 0.4),
+    inset 0 0 16px rgba(0, 0, 0, 0.8);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+
+.emote-center-hub {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #373737;
+  border: 3px solid #ffffff;
+  box-shadow: inset 3px 3px 0 #555, inset -3px -3px 0 #1e1e1e;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #ffffff;
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  z-index: 10;
+  gap: 4px;
+}
+
+.wheel-slot {
+  position: absolute;
+  width: 80px;
+  height: 64px;
+  background: #373737;
+  border: 2px solid #000000;
+  box-shadow: inset 2px 2px 0 #555, inset -2px -2px 0 #1e1e1e;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: #ffffff;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.wheel-slot:hover {
+  filter: brightness(1.3);
+  transform: translate(-50%, -50%) scale(1.1);
+  background: #4a2840;
+  border-color: #ff758f;
+}
+
+.wheel-slot-icon {
+  font-size: 1.3rem;
+}
+
+.wheel-slot-label {
+  font-family: var(--font-pixel);
+  font-size: 0.55rem;
+  text-align: center;
+}
+
+.wheel-page-btn {
+  position: absolute;
+  background: #373737;
+  border: 2px solid #ffffff;
+  color: #ffffff;
+  font-family: var(--font-pixel);
+  font-size: 0.65rem;
+  padding: 4px 8px;
+  cursor: pointer;
+  z-index: 15;
+}
+
+.wheel-prev { bottom: 16px; left: 60px; }
+.wheel-next { bottom: 16px; right: 60px; }
+
+/* Responsive adjustments for modals */
+@media (max-width: 768px) {
+  .book-quill-container {
+    grid-template-columns: 1fr;
+  }
+  .book-quill-container::after {
+    display: none;
+  }
+  #emote-wheel-dialog {
+    width: 340px;
+    height: 340px;
+  }
+  .emote-wheel-container {
+    width: 320px;
+    height: 320px;
+  }
+  .wheel-slot {
+    width: 64px;
+    height: 52px;
+  }
+  .wheel-slot-label {
+    font-size: 0.45rem;
+  }
+}

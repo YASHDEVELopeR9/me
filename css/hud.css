@@ -1,0 +1,476 @@
+/* ==========================================================================
+   HUD.CSS - Yash Vishwakarma "SURVIVAL GUIDE V1.0.0"
+   Top HUD Bar, Bottom Hearts/Hunger/XP Bar, 9-Slot Hotbar & Advancements
+   ========================================================================== */
+
+/* ==========================================================================
+   TOP HUD BAR
+   ========================================================================== */
+#top-hud {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background-color: var(--mc-panel-bg);
+  border-bottom: 4px solid #000000;
+  box-shadow: 
+    inset 0 4px 0 var(--mc-stone-light),
+    inset 0 -4px 0 var(--mc-stone-shadow),
+    0 4px 16px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  gap: 12px;
+}
+
+.hud-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hud-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-pixel);
+  font-size: 0.8rem;
+  color: #ffffff;
+  text-shadow: 2px 2px 0 #000000;
+  text-decoration: none;
+}
+
+.hud-logo img {
+  width: 28px;
+  height: 28px;
+  image-rendering: pixelated;
+}
+
+.hud-version-badge {
+  background: #ff758f;
+  color: #ffffff;
+  padding: 2px 6px;
+  font-size: 0.55rem;
+  border: 1px solid #000000;
+  text-shadow: 1px 1px 0 #000;
+}
+
+.hud-center {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-pixel);
+  font-size: 0.65rem;
+  color: #3f3f3f;
+}
+
+[data-theme="night"] .hud-center {
+  color: #dcd6e8;
+}
+
+.hud-biome-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.1);
+  padding: 4px 8px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.hud-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hud-icon-btn {
+  height: 36px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--font-pixel);
+  font-size: 0.65rem;
+  color: #ffffff;
+  text-shadow: 1px 1px 0 #000000;
+  background-color: #7d7d7d;
+  border: 2px solid #000000;
+  box-shadow: 
+    inset 2px 2px 0 #c6c6c6,
+    inset -2px -2px 0 #404040;
+  cursor: pointer;
+  transition: filter 0.1s ease;
+  user-select: none;
+}
+
+.hud-icon-btn:hover {
+  filter: brightness(1.2);
+}
+
+.hud-icon-btn:active {
+  box-shadow: 
+    inset 2px 2px 0 #404040,
+    inset -2px -2px 0 #c6c6c6;
+  transform: translateY(1px);
+}
+
+/* ==========================================================================
+   BOTTOM HUD: STATUS BARS & 9-SLOT HOTBAR
+   ========================================================================== */
+#bottom-hud {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: 10px;
+  pointer-events: none; /* children enable pointer events */
+}
+
+/* Status Bars: Hearts & Hunger */
+.status-bars-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(94vw, 480px);
+  padding: 0 4px;
+  pointer-events: auto;
+}
+
+.hearts-row, .hunger-row {
+  display: flex;
+  gap: 2px;
+}
+
+.heart-unit, .hunger-unit {
+  width: 18px;
+  height: 18px;
+  image-rendering: pixelated;
+  transition: transform 0.1s ease;
+}
+
+.heart-unit.shake {
+  animation: heartShake 0.4s ease infinite;
+}
+
+@keyframes heartShake {
+  0%, 100% { transform: translateY(0); }
+  25% { transform: translateY(-3px); }
+  75% { transform: translateY(2px); }
+}
+
+/* Experience Bar & Level Number */
+.xp-wrapper {
+  position: relative;
+  width: min(94vw, 480px);
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+.xp-bar-bg {
+  width: 100%;
+  height: 8px;
+  background-color: #000000;
+  border: 1px solid #1a1a1a;
+  position: relative;
+  overflow: hidden;
+}
+
+.xp-bar-fill {
+  height: 100%;
+  width: 82%;
+  background: repeating-linear-gradient(
+    90deg,
+    #80ff00,
+    #80ff00 10px,
+    #55aa00 10px,
+    #55aa00 12px
+  );
+  box-shadow: inset 0 1px 0 #b3ff66, inset 0 -1px 0 #336600;
+}
+
+.xp-level-number {
+  position: absolute;
+  top: -12px;
+  font-family: var(--font-pixel);
+  font-size: 0.95rem;
+  color: #80ff00;
+  text-shadow: 
+    -1px -1px 0 #000,  
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000,
+     0 0 8px rgba(128, 255, 0, 0.8);
+  font-weight: bold;
+}
+
+/* 9-Slot Hotbar */
+.hotbar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  pointer-events: auto;
+}
+
+/* Item Name + Lore Floating Tooltip */
+.hotbar-tooltip {
+  background: rgba(16, 8, 24, 0.94);
+  border: 3px solid #3d1b54;
+  box-shadow: 
+    inset 2px 2px 0 #5f2a84,
+    inset -2px -2px 0 #1b0c25,
+    0 4px 12px rgba(0, 0, 0, 0.6);
+  padding: 8px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+
+.hotbar-tooltip.hidden {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.tooltip-name {
+  font-family: var(--font-pixel);
+  font-size: 0.75rem;
+  color: #ffffff;
+  text-shadow: 2px 2px 0 #000000;
+}
+
+.tooltip-lore {
+  font-family: var(--font-retro);
+  font-size: 1.2rem;
+  color: #aa00aa;
+  text-shadow: 1px 1px 0 #000000;
+}
+
+.hotbar-frame {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background-color: var(--mc-panel-bg);
+  border: 4px solid #000000;
+  box-shadow: 
+    inset 3px 3px 0 var(--mc-stone-light),
+    inset -3px -3px 0 var(--mc-stone-shadow),
+    0 6px 20px rgba(0, 0, 0, 0.7);
+  padding: 4px;
+  max-width: 96vw;
+  overflow-x: auto;
+}
+
+.hotbar-slot {
+  width: 52px;
+  height: 52px;
+  background-color: var(--mc-slot-bg);
+  border: 2px solid #000000;
+  box-shadow: 
+    inset 3px 3px 0 var(--mc-slot-inner),
+    inset -3px -3px 0 var(--mc-slot-border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.08s ease;
+}
+
+.hotbar-slot:hover {
+  filter: brightness(1.2);
+}
+
+.hotbar-slot.active {
+  outline: 4px solid #ffffff;
+  outline-offset: -2px;
+  box-shadow: 
+    inset 3px 3px 0 #ffffff,
+    inset -3px -3px 0 #373737,
+    0 0 10px rgba(255, 255, 255, 0.9);
+  z-index: 2;
+}
+
+.hotbar-slot img {
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+.slot-key-number {
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  font-family: var(--font-pixel);
+  font-size: 0.55rem;
+  color: #aaaaaa;
+  text-shadow: 1px 1px 0 #000000;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   ADVANCEMENT MADE! TOAST
+   ========================================================================== */
+#advancement-toast-container {
+  position: fixed;
+  top: 72px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.advancement-toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #2a2028;
+  border: 3px solid #000000;
+  box-shadow: 
+    inset 3px 3px 0 #4a3847,
+    inset -3px -3px 0 #150f14,
+    4px 4px 12px rgba(0, 0, 0, 0.7);
+  padding: 10px 16px;
+  width: 320px;
+  transform: translateX(120%);
+  animation: slideToastIn 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes slideToastIn {
+  to { transform: translateX(0); }
+}
+
+.advancement-toast.dismissing {
+  animation: slideToastOut 0.4s ease forwards;
+}
+
+@keyframes slideToastOut {
+  to { transform: translateX(120%); opacity: 0; }
+}
+
+.adv-icon-frame {
+  width: 44px;
+  height: 44px;
+  background: #373737;
+  border: 2px solid #000000;
+  box-shadow: inset 2px 2px 0 #555555, inset -2px -2px 0 #1b1b1b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.adv-texts {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+}
+
+.adv-headline {
+  font-family: var(--font-pixel);
+  font-size: 0.65rem;
+  color: #ffff55;
+  text-shadow: 1px 1px 0 #000000;
+}
+
+.adv-title {
+  font-family: var(--font-pixel);
+  font-size: 0.75rem;
+  color: #ffffff;
+  text-shadow: 2px 2px 0 #000000;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ==========================================================================
+   PAUSE MENU (Esc)
+   ========================================================================== */
+#pause-menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  z-index: 9995;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease, visibility 0.2s;
+}
+
+#pause-menu-overlay.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.pause-title {
+  font-family: var(--font-pixel);
+  font-size: 1.8rem;
+  color: #ffffff;
+  text-shadow: 3px 3px 0 #000000;
+  letter-spacing: 2px;
+}
+
+.pause-button-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: min(88vw, 360px);
+}
+
+.pause-btn {
+  width: 100%;
+  padding: 14px 20px;
+  font-size: 0.85rem;
+}
+
+/* Responsive HUD tweaks */
+@media (max-width: 768px) {
+  #top-hud {
+    padding: 0 8px;
+  }
+  .hud-biome-pill {
+    display: none;
+  }
+  .hud-logo span {
+    display: none;
+  }
+  .hotbar-slot {
+    width: 44px;
+    height: 44px;
+  }
+  .hotbar-slot img {
+    width: 26px;
+    height: 26px;
+  }
+  .status-bars-container {
+    width: 96vw;
+  }
+}

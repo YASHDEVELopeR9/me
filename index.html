@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="day" data-scanlines="false">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO & Open Graph Meta -->
+  <title>SURVIVAL GUIDE V1.0.0 | Yash Vishwakarma - Web Designer, Developer &amp; AI Creator</title>
+  <meta name="description" content="Production-quality Minecraft-themed 3D portfolio for Yash Vishwakarma: Web Designer, Developer &amp; AI Creator. Featuring interactive Three.js voxel character, synthesized Web Audio SFX, and survival HUD.">
+  <meta name="keywords" content="Yash Vishwakarma, Portfolio, Minecraft Portfolio, 3D WebGL, Three.js, Python Developer, AI Creator, Web Designer, Dewas, Madhya Pradesh">
+  <meta name="author" content="Yash Vishwakarma">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="SURVIVAL GUIDE V1.0.0 | Yash Vishwakarma">
+  <meta property="og:description" content="Explore Yash Vishwakarma's Minecraft Cherry Grove 3D Portfolio. Level 38 Developer &amp; AI Creator.">
+  <meta property="og:image" content="assets/cherry_grove_bg.jpg">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/icons/grass_block.svg">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/themes.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/hud.css">
+  <link rel="stylesheet" href="css/modals.css">
+</head>
+<body>
+
+  <!-- Retro CRT Scanlines Layer -->
+  <div class="crt-scanlines" aria-hidden="true"></div>
+
+  <!-- Atmospheric Background & Falling Petals Canvas -->
+  <div class="realm-bg" aria-hidden="true"></div>
+  <div class="realm-overlay" aria-hidden="true"></div>
+  <canvas id="petals-canvas" aria-hidden="true"></canvas>
+
+  <!-- ========================================================================
+       REALM LOADER (Block-Style Loading Screen)
+       ======================================================================== -->
+  <div id="realm-loader" role="progressbar" aria-label="Loading Cherry Grove Realm">
+    <div class="loader-title">
+      BUILDING CHERRY GROVE REALM...<br>
+      <span class="text-gold" style="font-size: 0.8rem;">SURVIVAL GUIDE V1.0.0</span>
+    </div>
+    <div class="loader-bar-outer">
+      <div id="loader-bar-fill" class="loader-bar-fill"></div>
+    </div>
+    <div id="loader-status" class="loader-status">INITIALIZING VOXELS...</div>
+  </div>
+
+  <!-- ========================================================================
+       TOP HUD BAR
+       ======================================================================== -->
+  <header id="top-hud">
+    <div class="hud-left">
+      <a href="#hero" class="hud-logo" aria-label="Survival Guide Home">
+        <img src="assets/icons/grass_block.svg" alt="Grass Block">
+        <span>SURVIVAL GUIDE</span>
+        <span class="hud-version-badge">V1.0.0</span>
+      </a>
+    </div>
+
+    <div class="hud-center">
+      <span class="hud-biome-pill">🌸 Biome: Cherry Grove</span>
+      <span class="hud-biome-pill" id="hud-day-counter">Day 1337</span>
+    </div>
+
+    <div class="hud-right">
+      <button id="btn-hud-trades" class="hud-icon-btn" aria-label="View Villager Trades">🟢 Trades</button>
+      <button id="btn-sfx-toggle" class="hud-icon-btn" aria-label="Toggle Sound Effects">🔊 SFX</button>
+      <button id="btn-3d-toggle" class="hud-icon-btn" aria-label="Toggle 3D Avatar">🧊 3D: ON</button>
+      <button id="btn-theme-toggle" class="hud-icon-btn" aria-label="Toggle Day / Night">☀️ Day</button>
+      <button id="btn-pause-menu" class="hud-icon-btn" aria-label="Open Pause Menu (Esc)">⏸️ Esc</button>
+      <button id="btn-config-dialog" class="hud-icon-btn" aria-label="Open Options &amp; Config">⚙️</button>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       ADVANCEMENT TOAST CONTAINER
+       ======================================================================== -->
+  <aside id="advancement-toast-container" aria-live="polite" aria-atomic="true"></aside>
+
+  <!-- ========================================================================
+       MAIN APP SECTIONS
+       ======================================================================== -->
+  <div id="app">
+    <main>
+
+      <!-- 1. HERO SECTION -->
+      <section id="hero" aria-labelledby="hero-title">
+        <div class="hero-grid">
+          
+          <div class="hero-info">
+            <div class="hero-badge">
+              <span>🌸</span>
+              <span>SURVIVAL HARDCORE • LEVEL 38</span>
+            </div>
+
+            <h1 id="hero-title" class="hero-name">YASH VISHWAKARMA</h1>
+
+            <p class="hero-tagline">
+              Web Designer, Full-Stack Developer &amp; Autonomous AI Creator crafting responsive worlds, pixel precision, and intelligent agents.
+            </p>
+
+            <div class="hero-actions">
+              <a href="#profile" class="mc-button primary">Enter World</a>
+              <a href="#projects" class="mc-button">View Builds</a>
+              <a href="#trades" class="mc-button">Villager Trades</a>
+              <a href="#contact" class="mc-button accent">Contact</a>
+            </div>
+          </div>
+
+          <!-- 3D Interactive Minecraft Avatar Showcase -->
+          <div class="character-stage" id="character-container" role="region" aria-label="3D Interactive Minecraft Player">
+            <canvas id="character-canvas"></canvas>
+
+            <!-- 3D Stage Overlay Controls -->
+            <div class="character-overlay-controls">
+              <button id="char-btn-spin" class="char-btn" title="Toggle Auto-Spin" aria-label="Toggle 3D Auto Spin">🔄</button>
+              <button id="char-btn-walk" class="char-btn" title="Toggle Walk Cycle" aria-label="Toggle Walking Animation">🚶</button>
+              <button id="char-btn-reset" class="char-btn" title="Reset Camera" aria-label="Reset Camera Angle">🎯</button>
+              <button id="char-btn-emote" class="char-btn" title="Open Emote Wheel (Key: B)" aria-label="Open Emote Radial Wheel">🎭</button>
+            </div>
+
+            <div class="character-bottom-bar">
+              <span class="char-action-chip" onclick="document.getElementById('emote-wheel-dialog').showModal()">
+                ⚡ Press 'B' for Emotes
+              </span>
+              <span class="char-action-chip" onclick="document.getElementById('options-dialog').showModal()">
+                🎨 Skin Tint
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 2. PLAYER PROFILE & STATS -->
+      <section id="profile" aria-labelledby="profile-title">
+        <div class="section-header">
+          <h2 id="profile-title"><img src="assets/icons/player_head.svg" alt="" width="28" height="28"> PLAYER PROFILE</h2>
+          <p>Adventurer stats, verified origins, and battle-tested attributes.</p>
+        </div>
+
+        <div class="profile-grid">
+          
+          <!-- Bio & Core Attributes Card -->
+          <div class="mc-panel profile-card">
+            <h3 class="font-pixel" style="font-size: 0.9rem; color: #4a1525;">[ PLAYER BIO ]</h3>
+            <p class="profile-bio">
+              Motivated web designer, developer &amp; AI creator. Proficient in HTML, CSS, JavaScript, Python, Bootstrap, and WordPress. Certified in AI Agents with Google &amp; Kaggle Python Coder. Obsessed with high performance, tactile design, and resilient architecture.
+            </p>
+
+            <div class="tech-chips-box">
+              <span class="tech-chip">HTML5</span>
+              <span class="tech-chip">CSS3 Pixel Art</span>
+              <span class="tech-chip">JavaScript (ES6+)</span>
+              <span class="tech-chip">Python 3</span>
+              <span class="tech-chip">Three.js WebGL</span>
+              <span class="tech-chip">Web Audio API</span>
+              <span class="tech-chip">Bootstrap 5</span>
+              <span class="tech-chip">WordPress</span>
+              <span class="tech-chip">Google AI Agents</span>
+              <span class="tech-chip">Flask REST API</span>
+            </div>
+          </div>
+
+          <!-- Stats Card -->
+          <div class="mc-panel-dark profile-card">
+            <h3 class="font-pixel text-gold" style="font-size: 0.9rem;">[ STATS SHEET ]</h3>
+            <div class="stats-table">
+              <div class="stat-row">
+                <span class="stat-label">⛏️ Class</span>
+                <span class="stat-val">Web &amp; Python Builder</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-label">⚔️ Level</span>
+                <span class="stat-val">Level 38 (Full Stamina)</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-label">📜 Academic Tier</span>
+                <span class="stat-val">MPBSE 2025 Pass (12th State Board)</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-label">🧭 Spawn Coordinates</span>
+                <span class="stat-val">Dewas, M.P. 455001</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-label">🟢 Quest Status</span>
+                <span class="stat-val">Online • Open to Bounties</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 3. ENCHANTMENT TABLE (SKILLS) -->
+      <section id="skills" aria-labelledby="skills-title">
+        <div class="section-header">
+          <h2 id="skills-title"><img src="assets/icons/enchanted_book.svg" alt="" width="28" height="28"> ENCHANTMENT TABLE</h2>
+          <p>Standard Galactic Alphabet runes translate on hover. Spend Lapis to inspect mastery.</p>
+        </div>
+
+        <div class="enchantment-arena mc-panel-dark">
+          
+          <!-- Floating Enchantment Spellbook -->
+          <div class="spellbook-container">
+            <div class="spellbook-floating">
+              <img src="assets/icons/enchanted_book.svg" alt="Floating Spellbook">
+            </div>
+            <p class="font-pixel text-purple" style="font-size: 0.75rem;">ARCH-ENCHANTER DESK</p>
+            <span class="font-retro text-aqua">Hover runes to decode</span>
+          </div>
+
+          <!-- 3 Enchantment Rows -->
+          <div class="enchantment-slots">
+            
+            <!-- Tier 10 -->
+            <div class="enchant-row" 
+                 data-name="HTML5 &amp; CSS3 Mastercraft" 
+                 data-english="Structure and Style" 
+                 data-cost="1 Lapis Lazuli • 10 Levels"
+                 data-desc="Semantic elements, pixelated rendering, custom properties, responsive grids, and crisp keyframes.">
+              <div class="enchant-left">
+                <div class="enchant-level-badge">10</div>
+                <div class="enchant-names">
+                  <span class="sga-runes">ᓭℸ ̣∷⚍ᓵℸ ̣⚍∷ᒷ ᔑリ↸ ᓭℸ ̣||ꖎᒷ</span>
+                  <span class="enchant-english">HTML5 &amp; CSS3 Mastercraft</span>
+                </div>
+              </div>
+              <span class="enchant-cost">10 Levels</span>
+            </div>
+
+            <!-- Tier 20 -->
+            <div class="enchant-row" 
+                 data-name="JavaScript &amp; Three.js Sorcery" 
+                 data-english="Logic and Dimensions" 
+                 data-cost="2 Lapis Lazuli • 20 Levels"
+                 data-desc="WebGL 3D matrix math, hierarchical bones, procedural Web Audio oscillators, and reactive stores.">
+              <div class="enchant-left">
+                <div class="enchant-level-badge">20</div>
+                <div class="enchant-names">
+                  <span class="sga-runes">ꖎ𝙹⊣╎ᓵ ᔑリ↸ ↸╎ᒲᒷリᓭ╎𝙹リᓭ</span>
+                  <span class="enchant-english">JavaScript &amp; Three.js Sorcery</span>
+                </div>
+              </div>
+              <span class="enchant-cost">20 Levels</span>
+            </div>
+
+            <!-- Tier 30 -->
+            <div class="enchant-row" 
+                 data-name="Python &amp; AI Agent Transcendence" 
+                 data-english="Autonomous Intelligence" 
+                 data-cost="3 Lapis Lazuli • 30 Levels"
+                 data-desc="Multi-agent reasoning pipelines, tool invocation, Kaggle verified machine scripts, and Flask sentinels.">
+              <div class="enchant-left">
+                <div class="enchant-level-badge">30</div>
+                <div class="enchant-names">
+                  <span class="sga-runes">ᔑ⚍ℸ ̣𝙹リ𝙹ᒲ𝙹⚍ᓭ ╎リℸ ̣ᒷꖎꖎ╎⊣ᒷリᓵᒷ</span>
+                  <span class="enchant-english">Python &amp; AI Agent Transcendence</span>
+                </div>
+              </div>
+              <span class="enchant-cost">30 Levels</span>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 4. ENDER CHEST (PROJECTS 27-SLOT GRID) -->
+      <section id="projects" aria-labelledby="projects-title">
+        <div class="section-header">
+          <h2 id="projects-title"><img src="assets/icons/chest.svg" alt="" width="28" height="28"> ENDER CHEST INVENTORY</h2>
+          <p>27 inventory slots housing Yash's battle-tested builds, open-source repos, and prototypes.</p>
+        </div>
+
+        <div class="ender-chest-wrapper">
+          
+          <!-- 27-Slot Grid -->
+          <div class="ender-grid" role="grid" aria-label="Ender Chest Slots">
+            <!-- 9 Featured Slots (Row 1) -->
+            <div class="ender-slot" data-index="0" role="gridcell" tabindex="0" aria-label="Slot 1: Minecraft 3D Web Portfolio">
+              <span class="item-count">64</span>
+              <span style="font-size: 1.5rem;">💎</span>
+            </div>
+            <div class="ender-slot" data-index="1" role="gridcell" tabindex="0" aria-label="Slot 2: Autonomous AI Agent Assistant">
+              <span class="item-count">16</span>
+              <span style="font-size: 1.5rem;">⭐</span>
+            </div>
+            <div class="ender-slot" data-index="2" role="gridcell" tabindex="0" aria-label="Slot 3: Python Data Harvester">
+              <span class="item-count">32</span>
+              <span style="font-size: 1.5rem;">🔴</span>
+            </div>
+            <div class="ender-slot" data-index="3" role="gridcell" tabindex="0" aria-label="Slot 4: WordPress Business Theme">
+              <span class="item-count">1</span>
+              <span style="font-size: 1.5rem;">📖</span>
+            </div>
+            <div class="ender-slot" data-index="4" role="gridcell" tabindex="0" aria-label="Slot 5: Canvas Runner Mini-Game">
+              <span class="item-count">8</span>
+              <span style="font-size: 1.5rem;">🍏</span>
+            </div>
+            <div class="ender-slot" data-index="5" role="gridcell" tabindex="0" aria-label="Slot 6: Dewas Community Directory">
+              <span class="item-count">64</span>
+              <span style="font-size: 1.5rem;">🟢</span>
+            </div>
+            <div class="ender-slot" data-index="6" role="gridcell" tabindex="0" aria-label="Slot 7: Flask REST Sentinel API">
+              <span class="item-count">16</span>
+              <span style="font-size: 1.5rem;">👁️</span>
+            </div>
+            <div class="ender-slot" data-index="7" role="gridcell" tabindex="0" aria-label="Slot 8: Client Proof-of-Work Vault">
+              <span class="item-count">1</span>
+              <span style="font-size: 1.5rem;">🏺</span>
+            </div>
+            <div class="ender-slot" data-index="8" role="gridcell" tabindex="0" aria-label="Slot 9: Lighthouse 100 Suite">
+              <span class="item-count">1</span>
+              <span style="font-size: 1.5rem;">🪽</span>
+            </div>
+
+            <!-- Row 2 (Slots 9-17) -->
+            <div class="ender-slot" data-index="9"><span style="opacity: 0.2; font-size: 1.2rem;">🧱</span></div>
+            <div class="ender-slot" data-index="10"><span style="opacity: 0.2; font-size: 1.2rem;">🧱</span></div>
+            <div class="ender-slot" data-index="11"><span style="opacity: 0.2; font-size: 1.2rem;">🧱</span></div>
+            <div class="ender-slot" data-index="12"><span style="opacity: 0.2; font-size: 1.2rem;">🧱</span></div>
+            <div class="ender-slot" data-index="13"><span style="opacity: 0.2; font-size: 1.2rem;">🧱</span></div>
+            <div class="ender-slot" data-index="14"><span style="opacity: 0.2; font-size: 1.2rem;">🧱</span></div>
+            <div class="ender-slot" data-index="15"><span style="opacity: 0.2; font-size: 1.2rem;">🧱</span></div>
+            <div class="ender-slot" data-index="16"><span style="opacity: 0.2; font-size: 1.2rem;">🧱</span></div>
+            <div class="ender-slot" data-index="17"><span style="opacity: 0.2; font-size: 1.2rem;">🧱</span></div>
+
+            <!-- Row 3 (Slots 18-26) -->
+            <div class="ender-slot" data-index="18"><span style="opacity: 0.2; font-size: 1.2rem;">🧱</span></div>
+            <div class="ender-slot" data-index="19"><span style="opacity: 0.2; font-size: 1.2rem;">🧱</span></div>
+            <div class="ender-slot" data-index="20"><span style="opacity: 0.2; font-size: 1.2rem;">🧱</span></div>
+            <div class="ender-slot" data-index="21"><span style="opacity: 0.2; font-size: 1.2rem;">🧱</span></div>
+            <div class="ender-slot" data-index="22"><span style="opacity: 0.2; font-size: 1.2rem;">🧱</span></div>
+            <div class="ender-slot" data-index="23"><span style="opacity: 0.2; font-size: 1.2rem;">🧱</span></div>
+            <div class="ender-slot" data-index="24"><span style="opacity: 0.2; font-size: 1.2rem;">🧱</span></div>
+            <div class="ender-slot" data-index="25"><span style="opacity: 0.2; font-size: 1.2rem;">🧱</span></div>
+            <div class="ender-slot" data-index="26"><span style="opacity: 0.2; font-size: 1.2rem;">🧱</span></div>
+          </div>
+
+          <!-- Project Detail Pane -->
+          <div class="ender-detail-pane" id="ender-detail-pane" aria-live="polite">
+            <h3 id="ender-detail-title" class="item-lore-title">Minecraft 3D Web Portfolio</h3>
+            <span id="ender-detail-rarity" class="item-rarity text-gold">LEGENDARY</span>
+            
+            <p id="ender-detail-desc" class="item-lore-desc">
+              Production-quality Cherry Grove portfolio featuring Three.js procedural avatar, Web Audio SFX synthesis, 9-slot HUD, and Python Flask API.
+            </p>
+
+            <div class="item-tech-tags" id="ender-detail-tags">
+              <span class="item-tech-tag">Three.js</span>
+              <span class="item-tech-tag">Web Audio API</span>
+              <span class="item-tech-tag">Flask</span>
+            </div>
+
+            <div class="item-actions">
+              <a id="ender-detail-demo" href="https://github.com/YASHDEVELopeR9/me" target="_blank" rel="noopener" class="mc-button primary">Live Realm</a>
+              <a id="ender-detail-github" href="https://github.com/YASHDEVELopeR9/me" target="_blank" rel="noopener" class="mc-button">Repository</a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 5. CREDENTIALS & JOURNEY PANEL -->
+      <section id="credentials" aria-labelledby="credentials-title">
+        <div class="section-header">
+          <h2 id="credentials-title"><img src="assets/icons/nether_star.svg" alt="" width="28" height="28"> CREDENTIALS &amp; QUEST LOG</h2>
+          <p>Verified certificates from Google &amp; Kaggle, academic quests, and career milestones.</p>
+        </div>
+
+        <div class="mc-panel" style="padding: 0;">
+          
+          <!-- Tabs Header -->
+          <div class="mc-tabs-header" role="tablist">
+            <button class="mc-tab-btn active" data-tab="certs" role="tab" aria-selected="true" aria-controls="tab-certs">Certificates</button>
+            <button class="mc-tab-btn" data-tab="quests" role="tab" aria-selected="false" aria-controls="tab-quests">Quests &amp; XP</button>
+            <button class="mc-tab-btn" data-tab="skills" role="tab" aria-selected="false" aria-controls="tab-skills">Mastery Tree</button>
+            <button class="mc-tab-btn" data-tab="resume" role="tab" aria-selected="false" aria-controls="tab-resume">Resume Dispatch</button>
+          </div>
+
+          <div style="padding: 20px;">
+            
+            <!-- Tab 1: Certificates Grid -->
+            <div id="tab-certs" class="tab-pane active" role="tabpanel">
+              <div class="cert-grid">
+                
+                <!-- Google AI Agents -->
+                <div class="cert-card">
+                  <span class="cert-badge">⭐ Google Certified • Legendary</span>
+                  <h4 class="cert-title">5-Day AI Agents Intensive</h4>
+                  <span class="cert-issuer">Google &amp; Kaggle • Dec 18, 2025</span>
+                  <div class="cert-skills-tags">
+                    <span class="cert-tag">Multi-Agent Systems</span>
+                    <span class="cert-tag">Tool Calling</span>
+                    <span class="cert-tag">Stateful Workflows</span>
+                  </div>
+                  <button class="mc-button" style="margin-top: auto;" onclick="openCertLightbox({
+                    img: 'assets/certificates/google_ai_agents.svg',
+                    title: 'Google 5-Day AI Agents Intensive',
+                    issuer: 'Google Developers &amp; Kaggle',
+                    date: 'December 18, 2025',
+                    description: 'Comprehensive mastery in autonomous agents, multi-agent orchestration, tool usage, memory architectures, and stateful decision loops.',
+                    verifyUrl: 'https://kaggle.com/learn/certification'
+                  })">🔍 Inspect Lightbox</button>
+                </div>
+
+                <!-- Kaggle Python Coder -->
+                <div class="cert-card">
+                  <span class="cert-badge">🐍 Python Specialist • Epic</span>
+                  <h4 class="cert-title">Python Coder Certification</h4>
+                  <span class="cert-issuer">Kaggle • Nov 10, 2025</span>
+                  <div class="cert-skills-tags">
+                    <span class="cert-tag">Python 3 Core</span>
+                    <span class="cert-tag">Data Structures</span>
+                    <span class="cert-tag">Algorithms</span>
+                  </div>
+                  <button class="mc-button" style="margin-top: auto;" onclick="openCertLightbox({
+                    img: 'assets/certificates/kaggle_python.svg',
+                    title: 'Python Coder Certification',
+                    issuer: 'Kaggle',
+                    date: 'November 10, 2025',
+                    description: 'Official Kaggle credential validating proficiency in Python data structures, list comprehensions, functional paradigms, and algorithm design.',
+                    verifyUrl: 'https://kaggle.com/learn/certification'
+                  })">🔍 Inspect Lightbox</button>
+                </div>
+
+                <!-- Kaggle Code Forker -->
+                <div class="cert-card">
+                  <span class="cert-badge">⚡ Open Source ML • Rare</span>
+                  <h4 class="cert-title">Kaggle Code Forker &amp; Contributor</h4>
+                  <span class="cert-issuer">Kaggle • Nov 14, 2025</span>
+                  <div class="cert-skills-tags">
+                    <span class="cert-tag">Reproducible ML</span>
+                    <span class="cert-tag">Cloud Notebooks</span>
+                    <span class="cert-tag">EDA Pipelines</span>
+                  </div>
+                  <button class="mc-button" style="margin-top: auto;" onclick="openCertLightbox({
+                    img: 'assets/certificates/kaggle_forker.svg',
+                    title: 'Kaggle Code Forker &amp; Contributor',
+                    issuer: 'Kaggle',
+                    date: 'November 14, 2025',
+                    description: 'Demonstrated execution in collaborative cloud notebooks, fork workflows, exploratory data analysis, and model optimization.',
+                    verifyUrl: 'https://kaggle.com/learn/certification'
+                  })">🔍 Inspect Lightbox</button>
+                </div>
+
+                <!-- WordPress Wardhan -->
+                <div class="cert-card">
+                  <span class="cert-badge">🛠️ CMS Crafting • Rare</span>
+                  <h4 class="cert-title">WordPress Site Development</h4>
+                  <span class="cert-issuer">Wardhan Training &amp; Placement • 2024 - 2025</span>
+                  <div class="cert-skills-tags">
+                    <span class="cert-tag">Custom Themes</span>
+                    <span class="cert-tag">Performance SEO</span>
+                    <span class="cert-tag">Client Portals</span>
+                  </div>
+                  <button class="mc-button" style="margin-top: auto;" onclick="openCertLightbox({
+                    img: 'assets/certificates/wordpress_wardhan.svg',
+                    title: 'WordPress Site Development',
+                    issuer: 'Wardhan Training &amp; Placement',
+                    date: '2024 - 2025',
+                    description: 'Applied professional training in building custom, high-speed, SEO-optimized business websites using WordPress.',
+                    verifyUrl: 'https://github.com/YASHDEVELopeR9'
+                  })">🔍 Inspect Lightbox</button>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Tab 2: Quests & XP Timeline -->
+            <div id="tab-quests" class="tab-pane" role="tabpanel">
+              <div class="quest-timeline">
+                
+                <div class="quest-node">
+                  <div>
+                    <h4 class="font-pixel text-yellow" style="font-size: 0.8rem;">Quest 1: The Awakening (Secondary Education)</h4>
+                    <p class="font-retro" style="font-size: 1.3rem;">Madhya Pradesh Board of Secondary Education • Class of 2025 Pass</p>
+                    <p style="font-size: 0.9rem; color: #ccc;">Rigorous foundation in mathematics, logical analysis, and digital technologies.</p>
+                  </div>
+                  <span class="quest-xp-badge">+500 XP</span>
+                </div>
+
+                <div class="quest-node">
+                  <div>
+                    <h4 class="font-pixel text-yellow" style="font-size: 0.8rem;">Quest 2: Web Master Apprentice</h4>
+                    <p class="font-retro" style="font-size: 1.3rem;">Wardhan Training &amp; Independent Development • 2024-2025</p>
+                    <p style="font-size: 0.9rem; color: #ccc;">Crafted responsive frontend engines, CSS layouts, and modern vanilla JavaScript architecture.</p>
+                  </div>
+                  <span class="quest-xp-badge">+850 XP</span>
+                </div>
+
+                <div class="quest-node">
+                  <div>
+                    <h4 class="font-pixel text-yellow" style="font-size: 0.8rem;">Quest 3: The High Enchanter (Google AI Intensive)</h4>
+                    <p class="font-retro" style="font-size: 1.3rem;">Google Developers &amp; Kaggle • December 2025</p>
+                    <p style="font-size: 0.9rem; color: #ccc;">Mastered autonomous AI agents, tool invocation pipelines, and LLM reasoning loops.</p>
+                  </div>
+                  <span class="quest-xp-badge">+1,200 XP</span>
+                </div>
+
+                <div class="quest-node">
+                  <div>
+                    <h4 class="font-pixel text-yellow" style="font-size: 0.8rem;">Quest 4: The Python Alchemist</h4>
+                    <p class="font-retro" style="font-size: 1.3rem;">Kaggle Python Intensive • November 2025</p>
+                    <p style="font-size: 0.9rem; color: #ccc;">Demonstrated proficiency in algorithmic problem solving and data manipulation.</p>
+                  </div>
+                  <span class="quest-xp-badge">+950 XP</span>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Tab 3: Mastery Tree -->
+            <div id="tab-skills" class="tab-pane" role="tabpanel">
+              <div class="tech-chips-box">
+                <span class="tech-chip">HTML5 / Semantic Web (Tier 30)</span>
+                <span class="tech-chip">CSS3 / Flexbox / Grid (Tier 30)</span>
+                <span class="tech-chip">Vanilla JS ES6+ (Tier 28)</span>
+                <span class="tech-chip">Three.js / WebGL 3D (Tier 25)</span>
+                <span class="tech-chip">Web Audio API Synthesis (Tier 24)</span>
+                <span class="tech-chip">Python 3 Scripting (Tier 30)</span>
+                <span class="tech-chip">Google AI Agents (Tier 30)</span>
+                <span class="tech-chip">Flask REST API (Tier 25)</span>
+                <span class="tech-chip">WordPress Development (Tier 26)</span>
+                <span class="tech-chip">Bootstrap 5 (Tier 25)</span>
+                <span class="tech-chip">Git &amp; GitHub (Tier 27)</span>
+                <span class="tech-chip">Lighthouse 100 Optimization (Tier 28)</span>
+              </div>
+            </div>
+
+            <!-- Tab 4: Resume Dispatch -->
+            <div id="tab-resume" class="tab-pane" role="tabpanel">
+              <div style="display: flex; flex-direction: column; gap: 14px; text-align: center; padding: 20px;">
+                <h4 class="font-pixel" style="font-size: 1rem;">📜 Yash Vishwakarma - Official Resume Parchment</h4>
+                <p>Complete credentials, education details, verified project portfolio, and technical proficiencies.</p>
+                <div style="display: flex; justify-content: center; gap: 12px; margin-top: 10px;">
+                  <button class="mc-button primary" onclick="document.getElementById('resume-dialog').showModal()">
+                    👁️ View Resume Dialog
+                  </button>
+                  <a href="mailto:yashvishwakarma968@gmail.com?subject=Resume%20Requisition" class="mc-button">
+                    📧 Request via Email
+                  </a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 6. VILLAGER TRADING (SERVICES) -->
+      <section id="trades" aria-labelledby="trades-title">
+        <div class="section-header">
+          <h2 id="trades-title"><img src="assets/icons/emerald.svg" alt="" width="28" height="28"> VILLAGER TRADING MARKET</h2>
+          <p>Exchange Emeralds for specialized web development, Python automation, and AI builds.</p>
+        </div>
+
+        <div class="trades-arena mc-panel">
+          
+          <!-- Villager Avatar & Speech Bubble -->
+          <div class="villager-kiosk">
+            <div class="villager-portrait-box">
+              <img src="assets/icons/villager.svg" alt="Village Trader">
+            </div>
+            <div class="villager-speech-bubble">
+              "Hrrr! Looking for quality craft, adventurer? Choose your trade!"
+            </div>
+          </div>
+
+          <!-- Services Trade List -->
+          <div class="trade-list">
+            
+            <!-- Trade 1 -->
+            <div class="trade-item-card">
+              <div class="trade-exchange">
+                <div class="trade-emerald-cost">
+                  <img src="assets/icons/emerald.svg" alt="Emeralds">
+                  <span>16</span>
+                </div>
+                <span class="trade-arrow">➔</span>
+                <div class="trade-service-info">
+                  <span class="trade-service-name">Custom Web App / Landing Page</span>
+                  <span class="trade-service-detail">Responsive HTML5/CSS3/JS, pixel-perfect UX, animations, SEO tags. (3-5 Days)</span>
+                </div>
+              </div>
+              <button class="mc-button primary btn-trade-hire" data-service="Web Dev" data-cost="16">Trade / Hire</button>
+            </div>
+
+            <!-- Trade 2 -->
+            <div class="trade-item-card">
+              <div class="trade-exchange">
+                <div class="trade-emerald-cost">
+                  <img src="assets/icons/emerald.svg" alt="Emeralds">
+                  <span>24</span>
+                </div>
+                <span class="trade-arrow">➔</span>
+                <div class="trade-service-info">
+                  <span class="trade-service-name">Python Automation &amp; Bot</span>
+                  <span class="trade-service-detail">Custom scrapers, data pipelines, notification bots, scheduled tasks. (2-4 Days)</span>
+                </div>
+              </div>
+              <button class="mc-button primary btn-trade-hire" data-service="Python" data-cost="24">Trade / Hire</button>
+            </div>
+
+            <!-- Trade 3 -->
+            <div class="trade-item-card">
+              <div class="trade-exchange">
+                <div class="trade-emerald-cost">
+                  <img src="assets/icons/emerald.svg" alt="Emeralds">
+                  <span>12</span>
+                </div>
+                <span class="trade-arrow">➔</span>
+                <div class="trade-service-info">
+                  <span class="trade-service-name">WordPress Website &amp; Blog</span>
+                  <span class="trade-service-detail">Full setup, theme customization, plugins, speed optimization, contact forms. (4-7 Days)</span>
+                </div>
+              </div>
+              <button class="mc-button primary btn-trade-hire" data-service="WordPress" data-cost="12">Trade / Hire</button>
+            </div>
+
+            <!-- Trade 4 -->
+            <div class="trade-item-card">
+              <div class="trade-exchange">
+                <div class="trade-emerald-cost">
+                  <img src="assets/icons/emerald.svg" alt="Emeralds">
+                  <span>32</span>
+                </div>
+                <span class="trade-arrow">➔</span>
+                <div class="trade-service-info">
+                  <span class="trade-service-name">AI Agent System &amp; Prototype</span>
+                  <span class="trade-service-detail">Autonomous Gemini/LLM workflows, tool calling, memory pipelines. (5-8 Days)</span>
+                </div>
+              </div>
+              <button class="mc-button primary btn-trade-hire" data-service="AI Agents" data-cost="32">Trade / Hire</button>
+            </div>
+
+            <!-- Trade 5 -->
+            <div class="trade-item-card">
+              <div class="trade-exchange">
+                <div class="trade-emerald-cost">
+                  <img src="assets/icons/emerald.svg" alt="Emeralds">
+                  <span>1</span>
+                </div>
+                <span class="trade-arrow">➔</span>
+                <div class="trade-service-info">
+                  <span class="trade-service-name">1-on-1 Strategy &amp; Code Review</span>
+                  <span class="trade-service-detail">30-min strategy call, architecture review, or friendly chat. (Same Day)</span>
+                </div>
+              </div>
+              <button class="mc-button primary btn-trade-hire" data-service="Consultation" data-cost="1">Trade / Hire</button>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 7. BOOK & QUILL (CONTACT FORM) -->
+      <section id="contact" aria-labelledby="contact-title">
+        <div class="section-header">
+          <h2 id="contact-title"><img src="assets/icons/book_and_quill.svg" alt="" width="28" height="28"> BOOK &amp; QUILL CONTACT</h2>
+          <p>Pen your parchment. Dispatches directly to yashvishwakarma968@gmail.com via Flask sentinel.</p>
+        </div>
+
+        <form id="book-quill-form" class="book-quill-container" aria-label="Book &amp; Quill Contact Form">
+          
+          <!-- Page 1: Coordinates -->
+          <div class="book-page">
+            <h3 class="font-pixel" style="font-size: 0.85rem; color: #4a2810;">PAGE 1: COORDINATES</h3>
+            
+            <div class="book-field-group">
+              <label for="book-name" class="book-field-label">Adventurer Name:</label>
+              <input type="text" id="book-name" name="name" class="book-input" placeholder="e.g. Alex the Crafter" required minlength="2">
+            </div>
+
+            <div class="book-field-group">
+              <label for="book-contact" class="book-field-label">Dispatch Email / Coordinates:</label>
+              <input type="text" id="book-contact" name="contact" class="book-input" placeholder="alex@realm.com" required minlength="5">
+            </div>
+
+            <div class="book-field-group">
+              <label for="book-type" class="book-field-label">Requisition Type:</label>
+              <select id="book-type" name="type" class="book-select">
+                <option value="Web App Project">Custom Web App Project</option>
+                <option value="Python Automation">Python Automation / Scraper</option>
+                <option value="AI Agent Pipeline">AI Agent Pipeline</option>
+                <option value="Full-Time Quest">Full-Time Opportunity</option>
+                <option value="General Chat">General Greeting / Chat</option>
+              </select>
+            </div>
+
+            <span class="book-page-num">Page 1 of 2</span>
+          </div>
+
+          <!-- Page 2: Brief & Sign -->
+          <div class="book-page">
+            <h3 class="font-pixel" style="font-size: 0.85rem; color: #4a2810;">PAGE 2: QUEST BRIEF</h3>
+
+            <div class="book-field-group" style="flex: 1; display: flex; flex-direction: column;">
+              <label for="book-message" class="book-field-label">Write your message:</label>
+              <textarea id="book-message" name="message" class="book-textarea" placeholder="Detail your project objectives, timeline, or greetings here..." required minlength="10" maxlength="2000"></textarea>
+              <span id="book-char-count" class="book-char-count">0 / 2000</span>
+            </div>
+
+            <button type="submit" class="wax-seal-btn">
+              🖋️ Sign &amp; Send Parchment
+            </button>
+
+            <span class="book-page-num">Page 2 of 2</span>
+          </div>
+
+        </form>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ========================================================================
+       BOTTOM HUD: STATUS BARS & 9-SLOT HOTBAR
+       ======================================================================== -->
+  <footer id="bottom-hud" role="region" aria-label="Player Survival HUD">
+    
+    <!-- Status Bars: 10 Hearts & 10 Hunger Drumsticks -->
+    <div class="status-bars-container">
+      <div id="hud-hearts-row" class="hearts-row" aria-label="Health: 20/20"></div>
+      <div id="hud-hunger-row" class="hunger-row" aria-label="Hunger: 20/20"></div>
+    </div>
+
+    <!-- XP Bar & Level Number 38 -->
+    <div class="xp-wrapper" aria-label="Experience Level 38">
+      <div class="xp-bar-bg">
+        <div class="xp-bar-fill"></div>
+      </div>
+      <span class="xp-level-number">38</span>
+    </div>
+
+    <!-- 9-Slot Hotbar -->
+    <div class="hotbar-container">
+      
+      <!-- Floating Item Lore Tooltip -->
+      <div id="hotbar-tooltip" class="hotbar-tooltip" aria-live="polite">
+        <span id="tooltip-name" class="tooltip-name">Grass Block</span>
+        <span id="tooltip-lore" class="tooltip-lore">Spawn Point • Home</span>
+      </div>
+
+      <!-- Hotbar 9 Slots Frame -->
+      <nav id="hotbar-slots" class="hotbar-frame" aria-label="Inventory Hotbar (Keys 1 to 9)"></nav>
+
+    </div>
+
+  </footer>
+
+  <!-- ========================================================================
+       MODALS & DIALOGS
+       ======================================================================== -->
+
+  <!-- 1. Certificate Lightbox Dialog -->
+  <dialog id="cert-lightbox-dialog" aria-labelledby="cert-lightbox-title">
+    <div class="modal-frame">
+      <div class="modal-header">
+        <span class="modal-title">⭐ CERTIFICATE INSPECT</span>
+        <button class="modal-close-btn" aria-label="Close Lightbox">X</button>
+      </div>
+      <div class="modal-body">
+        <div style="background: #000; border: 2px solid #555; text-align: center; max-height: 400px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+          <img id="cert-lightbox-img" src="" alt="Certificate" style="max-width: 100%; max-height: 380px; object-fit: contain;">
+        </div>
+        <h3 id="cert-lightbox-title" class="font-pixel text-gold" style="font-size: 1rem;"></h3>
+        <p class="font-retro" style="font-size: 1.4rem; color: #55ffff;"><span id="cert-lightbox-issuer"></span> • <span id="cert-lightbox-date"></span></p>
+        <p id="cert-lightbox-desc" style="line-height: 1.6;"></p>
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px;">
+          <a id="cert-lightbox-verify" href="#" target="_blank" rel="noopener" class="mc-button primary">Verify Credential</a>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 2. Hire for the Quest Contract Dialog -->
+  <dialog id="hire-dialog" aria-labelledby="hire-dialog-title">
+    <div class="modal-frame">
+      <div class="modal-header">
+        <span class="modal-title">⚔️ HIRE FOR THE QUEST (CONTRACT)</span>
+        <button class="modal-close-btn" aria-label="Close Contract">X</button>
+      </div>
+      <div class="modal-body">
+        <form id="hire-quest-form" class="contract-scroll">
+          
+          <div class="book-field-group">
+            <label for="hire-name" class="font-pixel" style="font-size: 0.65rem;">Guild / Employer Name:</label>
+            <input type="text" id="hire-name" name="name" class="book-input" placeholder="Your Name or Company" required minlength="2">
+          </div>
+
+          <div class="book-field-group">
+            <label for="hire-contact" class="font-pixel" style="font-size: 0.65rem;">Dispatch Coordinates (Email/Phone):</label>
+            <input type="text" id="hire-contact" name="contact" class="book-input" placeholder="employer@guild.com" required minlength="5">
+          </div>
+
+          <div class="book-field-group">
+            <label class="font-pixel" style="font-size: 0.65rem;">Role / Bounty Type:</label>
+            <div class="chip-selection-group">
+              <span class="contract-chip selected" data-role="Web Dev">Web Dev</span>
+              <span class="contract-chip" data-role="Python">Python</span>
+              <span class="contract-chip" data-role="WordPress">WordPress</span>
+              <span class="contract-chip" data-role="AI Agents">AI Agents</span>
+              <span class="contract-chip" data-role="Full-Time">Full-Time</span>
+              <span class="contract-chip" data-role="Freelance">Freelance</span>
+            </div>
+          </div>
+
+          <div class="book-field-group">
+            <label class="font-pixel" style="font-size: 0.65rem;">Budget / Emerald Bounty:</label>
+            <div class="chip-selection-group">
+              <span class="contract-chip" data-budget="&lt;$500">&lt; $500</span>
+              <span class="contract-chip selected" data-budget="$500 - $1500">$500 - $1,500</span>
+              <span class="contract-chip" data-budget="$1500 - $3000">$1,500 - $3,000</span>
+              <span class="contract-chip" data-budget="$3000+">$3,000+</span>
+              <span class="contract-chip" data-budget="Custom">Custom</span>
+            </div>
+          </div>
+
+          <div class="book-field-group">
+            <label for="hire-brief" class="font-pixel" style="font-size: 0.65rem;">Quest Objectives &amp; Scope:</label>
+            <textarea id="hire-brief" name="brief" class="book-textarea" style="min-height: 100px;" placeholder="Outline your deliverables, required timeline, and goals..." required minlength="10"></textarea>
+          </div>
+
+          <button type="submit" class="mc-button primary" style="padding: 14px; font-size: 0.85rem;">
+            ⚔️ Seal &amp; Dispatch Contract
+          </button>
+
+        </form>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 3. Resume Parchment Dialog -->
+  <dialog id="resume-dialog" aria-labelledby="resume-dialog-title">
+    <div class="modal-frame">
+      <div class="modal-header">
+        <span class="modal-title">📜 YASH VISHWAKARMA - RESUME</span>
+        <button class="modal-close-btn" aria-label="Close Resume">X</button>
+      </div>
+      <div class="modal-body">
+        <div class="mc-panel-dark" style="display: flex; flex-direction: column; gap: 14px;">
+          <h3 class="font-pixel text-gold" style="font-size: 1.1rem;">YASH VISHWAKARMA</h3>
+          <p class="font-retro text-aqua" style="font-size: 1.4rem;">Web Designer, Full-Stack Developer &amp; AI Creator</p>
+          <p><strong>Spawn Coordinates:</strong> Dewas, Madhya Pradesh 455001, India</p>
+          <p><strong>Dispatch Email:</strong> yashvishwakarma968@gmail.com</p>
+          <hr style="border: 0; border-top: 1px solid #444;">
+          <h4 class="font-pixel text-green" style="font-size: 0.8rem;">ACADEMIC QUALIFICATIONS</h4>
+          <p>• Class 12th MPBSE (Madhya Pradesh Board of Secondary Education) - 2025 Pass</p>
+          <h4 class="font-pixel text-green" style="font-size: 0.8rem;">KEY CERTIFICATIONS</h4>
+          <p>• Google 5-Day AI Agents Intensive (Dec 18, 2025)<br>
+             • Kaggle Python Coder Certification (Nov 10, 2025)<br>
+             • Kaggle Code Forker &amp; Contributor (Nov 14, 2025)<br>
+             • WordPress Development, Wardhan Training &amp; Placement</p>
+          <h4 class="font-pixel text-green" style="font-size: 0.8rem;">TECHNICAL PROFICIENCIES</h4>
+          <p>HTML5, CSS3, JavaScript ES6+, Python 3, Three.js WebGL, Web Audio API, Bootstrap 5, WordPress, Flask REST, Git.</p>
+          <div style="display: flex; gap: 10px; margin-top: 10px;">
+            <a href="mailto:yashvishwakarma968@gmail.com?subject=Direct%20Inquiry" class="mc-button primary">Direct Inquire</a>
+            <a href="https://github.com/YASHDEVELopeR9" target="_blank" rel="noopener" class="mc-button">GitHub Profile</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 4. Options & Config Dialog -->
+  <dialog id="options-dialog" aria-labelledby="options-dialog-title">
+    <div class="modal-frame">
+      <div class="modal-header">
+        <span class="modal-title">⚙️ REALM OPTIONS &amp; CONFIG</span>
+        <button class="modal-close-btn" aria-label="Close Options">X</button>
+      </div>
+      <div class="modal-body">
+        
+        <div class="stat-row">
+          <span class="stat-label">🌸 Cherry Petal Density:</span>
+          <span id="opt-density-val" class="stat-val">45</span>
+        </div>
+        <input type="range" id="opt-petal-density" min="0" max="100" value="45" style="width: 100%; accent-color: #ff758f;">
+
+        <div class="stat-row" style="margin-top: 12px;">
+          <span class="stat-label">📺 Retro CRT Scanlines:</span>
+          <input type="checkbox" id="opt-scanlines" style="width: 22px; height: 22px;">
+        </div>
+
+        <div style="margin-top: 12px;">
+          <label class="font-pixel" style="font-size: 0.7rem;">🎨 Character Skin Tint Preset:</label>
+          <div style="display: flex; gap: 8px; margin-top: 8px;">
+            <button class="mc-button btn-skin-color" data-color="default">Default</button>
+            <button class="mc-button btn-skin-color" data-color="dark">Dark</button>
+            <button class="mc-button btn-skin-color" data-color="cyan">Cyan</button>
+            <button class="mc-button btn-skin-color" data-color="gold">Gold</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 5. Emote Radial Wheel Dialog -->
+  <dialog id="emote-wheel-dialog" aria-labelledby="emote-wheel-title">
+    <div class="emote-wheel-container">
+      <div class="emote-center-hub">
+        <span>EMOTE</span>
+        <span class="text-gold">WHEEL</span>
+        <span style="font-size: 0.45rem; color: #aaa;">Esc to Close</span>
+      </div>
+
+      <div id="emote-wheel-slots"></div>
+
+      <button id="wheel-prev-btn" class="wheel-page-btn wheel-prev" aria-label="Previous Emotes Page">&lt; Pg 1</button>
+      <button id="wheel-next-btn" class="wheel-page-btn wheel-next" aria-label="Next Emotes Page">Pg 2 &gt;</button>
+    </div>
+  </dialog>
+
+  <!-- 6. Pause Menu Overlay (Esc) -->
+  <div id="pause-menu-overlay" role="dialog" aria-modal="true" aria-label="Game Paused Menu">
+    <h2 class="pause-title">GAME PAUSED</h2>
+    <div class="pause-button-list">
+      <button id="btn-resume-game" class="mc-button primary pause-btn">Back to Game</button>
+      <button class="mc-button pause-btn" onclick="document.getElementById('pause-menu-overlay').classList.remove('open'); document.querySelector('[data-tab=certs]').click(); document.getElementById('credentials').scrollIntoView();">Advancements &amp; Quests</button>
+      <button class="mc-button pause-btn" onclick="document.getElementById('pause-menu-overlay').classList.remove('open'); document.getElementById('options-dialog').showModal();">Options...</button>
+      <button class="mc-button pause-btn" onclick="document.getElementById('pause-menu-overlay').classList.remove('open'); document.getElementById('contact').scrollIntoView();">Give Feedback / Contact</button>
+      <button id="btn-respawn" class="mc-button accent pause-btn">Respawn / Return to Top</button>
+    </div>
+  </div>
+
+  <!-- Main ES Module Script -->
+  <script type="module" src="js/main.js"></script>
+
+</body>
+</html>

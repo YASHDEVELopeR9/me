@@ -1,0 +1,372 @@
+{
+  "personal": {
+    "name": "Yash Vishwakarma",
+    "title": "Web Designer, Developer & AI Creator",
+    "handle": "SURVIVAL HARDCORE • LEVEL 38",
+    "level": 38,
+    "xp": 3840,
+    "spawn": "Dewas, M.P. 455001, India",
+    "status": "Online • Accepting Quests & Bounties",
+    "class": "Web & Python Builder",
+    "education": "Class 12th MPBSE 2025 Pass (State Board)",
+    "bio": "Motivated web designer, developer & AI creator. Proficient in HTML, CSS, JavaScript, Python, Bootstrap, WordPress. Certified in AI Agents with Google & Kaggle Python Coder.",
+    "email": "yashvishwakarma968@gmail.com",
+    "github": "https://github.com/YASHDEVELopeR9",
+    "linkedin": "https://linkedin.com/in/yash-vishwakarma",
+    "resumeUrl": "#resume-dialog",
+    "biome": "Cherry Grove",
+    "version": "1.0.0"
+  },
+  "stats": [
+    { "label": "Player Class", "value": "Web & Python Builder", "icon": "⛏️" },
+    { "label": "Combat Level", "value": "Level 38 (Full Stamina)", "icon": "⚔️" },
+    { "label": "Academic Tier", "value": "MPBSE 2025 Pass", "icon": "📜" },
+    { "label": "Home Realm", "value": "Dewas, M.P. 455001", "icon": "🧭" },
+    { "label": "Quest Status", "value": "Online - Open to Work", "icon": "🟢" },
+    { "label": "Mana / Skills", "value": "Full Enchanted Bar", "icon": "✨" }
+  ],
+  "skills": [
+    {
+      "category": "Frontend Crafting",
+      "level": "Master",
+      "items": [
+        { "name": "HTML5 & Semantic Web", "tier": "Level 30", "icon": "🌐", "runic": "ᔑꖎꖎ ⎓𝙹∷ᒲᓭ" },
+        { "name": "CSS3 & Pixel Aesthetics", "tier": "Level 30", "icon": "🎨", "runic": "ᓵ𝙹ꖎ𝙹∷ᓭ" },
+        { "name": "JavaScript (ES6+)", "tier": "Level 28", "icon": "⚡", "runic": "ᓭᓵ∷╎!¡ℸ ̣" },
+        { "name": "Responsive Design & Flex/Grid", "tier": "Level 30", "icon": "📱", "runic": "⎓ꖎᒷ ̇/" },
+        { "name": "Bootstrap 5", "tier": "Level 25", "icon": "🗂️", "runic": "ʖ𝙹𝙹ℸ ̣" }
+      ]
+    },
+    {
+      "category": "Interactive & 3D WebGL",
+      "level": "Expert",
+      "items": [
+        { "name": "Three.js & WebGL", "tier": "Level 25", "icon": "🧊", "runic": "ℸ ̣⍑∷ᒷᒷ" },
+        { "name": "Web Audio API Synthesis", "tier": "Level 24", "icon": "🎵", "runic": "ᓭ𝙹⚍リ↸" },
+        { "name": "Canvas 2D Particle Engine", "tier": "Level 27", "icon": "🌸", "runic": "ᓭ!¡ᔑ∷ꖌ" },
+        { "name": "Game UI / HUD Architecture", "tier": "Level 30", "icon": "🎮", "runic": "⊣ᔑᒲᒷ" }
+      ]
+    },
+    {
+      "category": "Python & Autonomous AI",
+      "level": "Enchanted",
+      "items": [
+        { "name": "Python 3 Core & Scripting", "tier": "Level 30", "icon": "🐍", "runic": "!¡||ℸ ̣⍑𝙹リ" },
+        { "name": "Google AI Agents Intensive", "tier": "Level 30", "icon": "🤖", "runic": "ᔑ╎ ᔑ⊣ᒷリℸ ̣" },
+        { "name": "Kaggle Python Specialist", "tier": "Level 28", "icon": "📊", "runic": "ꖌᔑ⊣⊣ꖎᒷ" },
+        { "name": "Flask REST APIs & Backends", "tier": "Level 25", "icon": "⚙️", "runic": "⎓ꖎᔑᓭꖌ" },
+        { "name": "Automation & Web Scraping", "tier": "Level 26", "icon": "🔄", "runic": "ʖ𝙹ℸ ̣ᓭ" }
+      ]
+    },
+    {
+      "category": "CMS & Deployment",
+      "level": "Adept",
+      "items": [
+        { "name": "WordPress Site Development", "tier": "Level 26", "icon": "📝", "runic": "∴𝙹∷↸" },
+        { "name": "Git & GitHub Versioning", "tier": "Level 27", "icon": "📦", "runic": "⊣╎ℸ ̣" },
+        { "name": "Docker & Container Basics", "tier": "Level 20", "icon": "🐳", "runic": "ᓵ𝙹リℸ ̣" },
+        { "name": "Lighthouse Optimization", "tier": "Level 28", "icon": "🚀", "runic": "ᓭ!¡ᒷᒷ↸" }
+      ]
+    }
+  ],
+  "enchantments": [
+    {
+      "slot": 1,
+      "level": 10,
+      "name": "HTML5 & CSS3 Mastercraft",
+      "sgaRunic": "ᓭℸ ̣∷⚍ᓵℸ ̣⚍∷ᒷ ᔑリ↸ ᓭℸ ̣||ꖎᒷ",
+      "english": "Structure and Style",
+      "cost": "1 Lapis Lazuli • 10 Levels",
+      "desc": "Imbues web elements with semantic clarity, responsive layouts, pixel-perfect borders, and fluid keyframe animations.",
+      "lore": "Enchanted with Unbreaking III and Pixel Rendering."
+    },
+    {
+      "slot": 2,
+      "level": 20,
+      "name": "JavaScript & Three.js Sorcery",
+      "sgaRunic": "ꖎ𝙹⊣╎ᓵ ᔑリ↸ ↸╎ᒲᒷリᓭ╎𝙹リᓭ",
+      "english": "Logic and Dimensions",
+      "cost": "2 Lapis Lazuli • 20 Levels",
+      "desc": "Channels the WebGL matrix to summon dynamic 3D blocky avatars, synthesized Web Audio frequencies, and reactive state stores.",
+      "lore": "Sharpness IV against boring websites."
+    },
+    {
+      "slot": 3,
+      "level": 30,
+      "name": "Python & AI Agent Transcendence",
+      "sgaRunic": "ᔑ⚍ℸ ̣𝙹リ𝙹ᒲ𝙹⚍ᓭ ╎リℸ ̣ᒷꖎꖎ╎⊣ᒷリᓵᒷ",
+      "english": "Autonomous Intelligence",
+      "cost": "3 Lapis Lazuli • 30 Levels",
+      "desc": "Awakens multi-step autonomous agent architectures, Kaggle verified machine logic, and resilient Flask REST backends.",
+      "lore": "Fortune III on data processing."
+    }
+  ],
+  "certificates": [
+    {
+      "id": "google-ai-agents",
+      "title": "5-Day AI Agents Intensive",
+      "issuer": "Google & Kaggle",
+      "date": "Dec 18, 2025",
+      "badge": "⭐ Google Certified",
+      "rarity": "Legendary",
+      "skillsCovered": ["Autonomous AI Agents", "LLM Reasoning", "Function Calling", "Multi-Agent Workflows"],
+      "verifyUrl": "https://kaggle.com/learn/certification",
+      "description": "Comprehensive intensive covering multi-agent orchestration, tool usage, memory architectures, and stateful autonomous decision pipelines."
+    },
+    {
+      "id": "kaggle-python-coder",
+      "title": "Python Coder Certification",
+      "issuer": "Kaggle",
+      "date": "Nov 10, 2025",
+      "badge": "🐍 Python Specialist",
+      "rarity": "Epic",
+      "skillsCovered": ["Python 3", "Data Structures", "Functional Programming", "Algorithm Design"],
+      "verifyUrl": "https://kaggle.com/learn/certification",
+      "description": "Official Kaggle certification validating proficiency in Python data structures, list comprehensions, modules, and algorithmic problem-solving."
+    },
+    {
+      "id": "kaggle-code-forker",
+      "title": "Kaggle Code Forker & Contributor",
+      "issuer": "Kaggle",
+      "date": "Nov 14, 2025",
+      "badge": "⚡ Open Source ML",
+      "rarity": "Rare",
+      "skillsCovered": ["Notebook Automation", "Reproducible ML", "Community Kernels", "EDA"],
+      "verifyUrl": "https://kaggle.com/learn/certification",
+      "description": "Demonstrated mastery of collaborative cloud notebooks, fork workflows, exploratory data analysis, and model execution."
+    },
+    {
+      "id": "wordpress-wardhan",
+      "title": "WordPress Site Development",
+      "issuer": "Wardhan Training & Placement",
+      "date": "2024 - 2025",
+      "badge": "🛠️ CMS Crafting",
+      "rarity": "Rare",
+      "skillsCovered": ["Custom Themes", "Plugins Architecture", "SEO Configuration", "Client Portals"],
+      "verifyUrl": "https://yashvishwakarma.dev",
+      "description": "Hands-on professional training in building custom, high-speed, SEO-optimized business websites using the WordPress engine."
+    }
+  ],
+  "quests": [
+    {
+      "id": "quest-1",
+      "title": "The Awakening: MPBSE Secondary Education",
+      "institution": "Madhya Pradesh Board of Secondary Education",
+      "period": "Graduating Class of 2025",
+      "xp": "+500 XP",
+      "status": "COMPLETED",
+      "details": "Completed secondary education with rigorous discipline in Dewas, laying the foundation for computer science, mathematics, and analytical reasoning."
+    },
+    {
+      "id": "quest-2",
+      "title": "Apprentice of the Web: Frontend Mastery",
+      "institution": "Self-Directed & Wardhan Training",
+      "period": "2024 - Present",
+      "xp": "+850 XP",
+      "status": "COMPLETED",
+      "details": "Engineered responsive, accessible, pixel-art and modern web UIs utilizing HTML5 semantic hierarchies, CSS custom properties, and modern JavaScript."
+    },
+    {
+      "id": "quest-3",
+      "title": "The High Enchanter: Google 5-Day AI Agents",
+      "institution": "Google & Kaggle",
+      "period": "December 2025",
+      "xp": "+1,200 XP",
+      "status": "COMPLETED",
+      "details": "Pioneered agentic AI systems with tool use, memory systems, structured outputs, and evaluation loops."
+    },
+    {
+      "id": "quest-4",
+      "title": "The Python Alchemist: Kaggle Python Intensive",
+      "institution": "Kaggle",
+      "period": "November 2025",
+      "xp": "+950 XP",
+      "status": "COMPLETED",
+      "details": "Mastered idiomatic Pythonic scripting, automation pipelines, and data manipulation tools."
+    }
+  ],
+  "projects": [
+    {
+      "slot": 0,
+      "id": "minecraft-portfolio",
+      "title": "Minecraft 3D Web Portfolio (SURVIVAL GUIDE V1.0.0)",
+      "rarity": "Legendary",
+      "count": 64,
+      "item": "Diamond",
+      "icon": "💎",
+      "tech": ["Three.js", "Web Audio API", "HTML5", "CSS3 Pixel Art", "Python Flask"],
+      "desc": "A production-quality Minecraft Cherry Grove-themed 3D portfolio featuring an interactive blocky avatar, synthesized Web Audio SFX, 9-slot HUD, Ender chest inventory, and custom Flask contact API.",
+      "demo": "https://yashdeveloper9.github.io/me/",
+      "github": "https://github.com/YASHDEVELopeR9/me",
+      "featured": true
+    },
+    {
+      "slot": 1,
+      "id": "ai-agent-assistant",
+      "title": "Autonomous AI Agent Assistant",
+      "rarity": "Epic",
+      "count": 16,
+      "item": "Nether Star",
+      "icon": "⭐",
+      "tech": ["Python", "Google Gemini API", "Tool Calling", "Memory Architecture"],
+      "desc": "Multi-agent autonomous executor capable of planning complex objectives, searching web resources, executing code safely, and synthesizing structured outputs.",
+      "demo": "https://github.com/YASHDEVELopeR9",
+      "github": "https://github.com/YASHDEVELopeR9",
+      "featured": true
+    },
+    {
+      "slot": 2,
+      "id": "python-automation-bot",
+      "title": "Python Data Harvester & Automation Bot",
+      "rarity": "Rare",
+      "count": 32,
+      "item": "Redstone Dust",
+      "icon": "🔴",
+      "tech": ["Python", "BeautifulSoup", "Asyncio", "SQLite"],
+      "desc": "Lightweight, resilient web automation engine that crawls target APIs and pages, normalizes datasets, and triggers automated Telegram/Email notifications.",
+      "demo": "https://github.com/YASHDEVELopeR9",
+      "github": "https://github.com/YASHDEVELopeR9",
+      "featured": true
+    },
+    {
+      "slot": 3,
+      "id": "wordpress-business-portal",
+      "title": "Modern Business WordPress Portal",
+      "rarity": "Rare",
+      "count": 1,
+      "item": "Enchanted Book",
+      "icon": "📖",
+      "tech": ["WordPress", "PHP", "CSS3", "SEO & Performance"],
+      "desc": "High-conversion, mobile-first business website built during Wardhan training with optimized page speeds, responsive booking forms, and client dashboard.",
+      "demo": "https://github.com/YASHDEVELopeR9",
+      "github": "https://github.com/YASHDEVELopeR9",
+      "featured": true
+    },
+    {
+      "slot": 4,
+      "id": "pixel-game-canvas",
+      "title": "Cherry Blossom 2D Canvas Runner",
+      "rarity": "Epic",
+      "count": 8,
+      "item": "Golden Apple",
+      "icon": "🍏",
+      "tech": ["Canvas 2D API", "Vanilla JS", "Audio Synthesis", "Game Loops"],
+      "desc": "Arcade survival mini-game built entirely with HTML5 canvas and Web Audio sound effects, featuring collision detection, particle physics, and high-score saves.",
+      "demo": "https://github.com/YASHDEVELopeR9",
+      "github": "https://github.com/YASHDEVELopeR9",
+      "featured": false
+    },
+    {
+      "slot": 5,
+      "id": "dewas-community-hub",
+      "title": "Dewas Local Directory & Services Hub",
+      "rarity": "Common",
+      "count": 64,
+      "item": "Emerald",
+      "icon": "🟢",
+      "tech": ["HTML5", "CSS Grid", "Bootstrap 5", "Local Storage"],
+      "desc": "Community resource catalog spotlighting local businesses, emergency contacts, and artisan services around Dewas, M.P. with instant filter search.",
+      "demo": "https://github.com/YASHDEVELopeR9",
+      "github": "https://github.com/YASHDEVELopeR9",
+      "featured": false
+    },
+    {
+      "slot": 6,
+      "id": "flask-rest-sentinel",
+      "title": "Flask REST Sentinel API & Dispatcher",
+      "rarity": "Rare",
+      "count": 16,
+      "item": "Ender Eye",
+      "icon": "👁️",
+      "tech": ["Python Flask", "CORS", "Rate Limiting", "SMTP Email"],
+      "desc": "Secure microservice backend powering portfolio inquiries, token authentication, request throttling, and transactional SMTP mail delivery.",
+      "demo": "https://github.com/YASHDEVELopeR9",
+      "github": "https://github.com/YASHDEVELopeR9",
+      "featured": false
+    },
+    {
+      "slot": 7,
+      "id": "totem-safety-vault",
+      "title": "Client Proof-of-Work Vault",
+      "rarity": "Legendary",
+      "count": 1,
+      "item": "Totem of Undying",
+      "icon": "🏺",
+      "tech": ["HTML5 Canvas", "Security Best Practices", "A11y"],
+      "desc": "Easter egg vault item representing guaranteed project delivery, bug-free survival, and zero downtime support for client contracts.",
+      "demo": "https://github.com/YASHDEVELopeR9",
+      "github": "https://github.com/YASHDEVELopeR9",
+      "featured": false
+    },
+    {
+      "slot": 8,
+      "id": "elytra-glide-suite",
+      "title": "Lighthouse 100 Performance Suite",
+      "rarity": "Epic",
+      "count": 1,
+      "item": "Elytra Wings",
+      "icon": "🪽",
+      "tech": ["Core Web Vitals", "Asset Compression", "WebP", "Caching"],
+      "desc": "Performance auditing and speed optimization templates ensuring sub-second load times, instant visual paints, and smooth 60fps frame rates.",
+      "demo": "https://github.com/YASHDEVELopeR9",
+      "github": "https://github.com/YASHDEVELopeR9",
+      "featured": false
+    }
+  ],
+  "trades": [
+    {
+      "id": "trade-web-app",
+      "service": "Custom Web App / Landing Page",
+      "emeraldCost": 16,
+      "experienceCost": "3 Levels",
+      "deliverables": "Responsive HTML5/CSS3/JS, pixel-perfect UX, SEO tags, mobile optimized, interactive animations.",
+      "turnaround": "3 - 5 Days",
+      "quote": "A sturdy build that withstands Creeper explosions and mobile screens alike!"
+    },
+    {
+      "id": "trade-python-auto",
+      "service": "Python Automation & Scripting",
+      "emeraldCost": 24,
+      "experienceCost": "5 Levels",
+      "deliverables": "Custom web scrapers, data cleaning pipelines, automated bots, CSV/JSON reporting, scheduled tasks.",
+      "turnaround": "2 - 4 Days",
+      "quote": "Automate the repetitive mining while you enjoy the diamonds!"
+    },
+    {
+      "id": "trade-wordpress",
+      "service": "WordPress Website & Blog",
+      "emeraldCost": 12,
+      "experienceCost": "2 Levels",
+      "deliverables": "Full WordPress setup, theme customization, plugin configuration, contact forms, speed optimization.",
+      "turnaround": "4 - 7 Days",
+      "quote": "Reliable village market storefront for your business or journal."
+    },
+    {
+      "id": "trade-ai-agent",
+      "service": "AI Agent & Workflow Prototype",
+      "emeraldCost": 32,
+      "experienceCost": "7 Levels",
+      "deliverables": "Autonomous Gemini/LLM workflow, function calling integration, prompt optimization, structured responses.",
+      "turnaround": "5 - 8 Days",
+      "quote": "Imbued with the arcane logic of the Google AI Agents Intensive!"
+    },
+    {
+      "id": "trade-consultation",
+      "service": "1-on-1 Code Review & Consultation",
+      "emeraldCost": 1,
+      "experienceCost": "Free with Chat",
+      "deliverables": "30-min strategy call, code critique, portfolio roadmap, architecture feedback, or friendly tech chat.",
+      "turnaround": "Same Day / 24 Hours",
+      "quote": "Hrrr! Come sit by the campfire and share your quest coordinates."
+    }
+  ],
+  "advancements": [
+    { "id": "adv-root", "title": "Taking Inventory", "desc": "Spawn into Yash Vishwakarma's Cherry Grove Realm.", "icon": "🌸" },
+    { "id": "adv-profile", "title": "Know Your Crafter", "desc": "Inspected Yash's stats, level 38 status, and spawn coordinates.", "icon": "👤" },
+    { "id": "adv-skills", "title": "Enchanter", "desc": "Decoded Standard Galactic Alphabet runes at the Enchantment Table.", "icon": "✨" },
+    { "id": "adv-projects", "title": "Acquire Hardware", "desc": "Opened the 27-slot Ender Chest to review battle-tested builds.", "icon": "💎" },
+    { "id": "adv-trades", "title": "What a Deal!", "desc": "Successfully negotiated services with the Village Merchant.", "icon": "🟢" },
+    { "id": "adv-emote", "title": "Time to Strike a Pose!", "desc": "Triggered a 3D player emote from the wheel or keyboard.", "icon": "🕺" },
+    { "id": "adv-contact", "title": "Signed & Sealed", "desc": "Opened the Book & Quill to dispatch a quest contract.", "icon": "🪶" }
+  ]
+}

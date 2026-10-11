@@ -1,0 +1,128 @@
+/* ==========================================================================
+   THEMES.CSS - Yash Vishwakarma "SURVIVAL GUIDE V1.0.0"
+   Biome: Cherry Grove (Day & Night) + Retro Scanlines & Contrast Presets
+   ========================================================================== */
+
+:root {
+  /* Day Theme (Default Cherry Grove) */
+  --theme-name: "Cherry Grove (Day)";
+  --sky-top: #ffccd5;
+  --sky-mid: #ffb3c6;
+  --sky-bottom: #fbb1bd;
+  --bg-overlay: rgba(43, 20, 31, 0.55);
+  
+  /* Minecraft UI Palette */
+  --mc-stone: #c6c6c6;
+  --mc-stone-light: #ffffff;
+  --mc-stone-dark: #555555;
+  --mc-stone-shadow: #373737;
+  --mc-panel-bg: #c6c6c6;
+  --mc-slot-bg: #8b8b8b;
+  --mc-slot-inner: #373737;
+  --mc-slot-border-dark: #373737;
+  --mc-slot-border-light: #ffffff;
+  
+  /* Wood / Chest Palette */
+  --mc-wood-base: #a46938;
+  --mc-wood-dark: #58351b;
+  
+  /* Text & Accents */
+  --text-main: #3f3f3f;
+  --text-light: #ffffff;
+  --text-muted: #8b8b8b;
+  --text-shadow: #1e1e1e;
+  
+  /* Minecraft Lore & Rarity Colors */
+  --mc-white: #ffffff;
+  --mc-yellow: #ffff55;
+  --mc-gold: #ffaa00;
+  --mc-green: #55ff55;
+  --mc-aqua: #55ffff;
+  --mc-red: #ff5555;
+  --mc-purple: #aa00aa;
+  --mc-light-purple: #ff55ff;
+  --mc-dark-purple: #2a0845;
+  --mc-gray: #aaaaaa;
+  --mc-dark-gray: #555555;
+  --mc-blue: #5555ff;
+  --mc-emerald: #17b978;
+  --mc-xp-green: #80ff00;
+  
+  /* Accent Cherry Blends */
+  --cherry-pink: #ff758f;
+  --cherry-petal: #ffccd5;
+  --cherry-dark: #4a1525;
+  --cherry-glow: rgba(255, 117, 143, 0.45);
+  
+  /* HUD dimensions */
+  --hotbar-slot-size: 52px;
+  --font-pixel: 'Press Start 2P', monospace;
+  --font-retro: 'VT323', monospace;
+  --font-body: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  
+  /* Animations */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Night Theme (Deep Cherry Night) */
+[data-theme="night"] {
+  --theme-name: "Deep Cherry Night";
+  --sky-top: #0b0914;
+  --sky-mid: #1f142b;
+  --sky-bottom: #391838;
+  --bg-overlay: rgba(11, 9, 20, 0.82);
+  
+  --mc-stone: #2e2b38;
+  --mc-stone-light: #4c465a;
+  --mc-stone-dark: #191622;
+  --mc-stone-shadow: #100e17;
+  --mc-panel-bg: #282433;
+  --mc-slot-bg: #1c1924;
+  --mc-slot-inner: #0f0d14;
+  --mc-slot-border-dark: #0f0d14;
+  --mc-slot-border-light: #4a4457;
+  
+  --text-main: #f0ebf7;
+  --text-light: #ffffff;
+  --text-muted: #a39cae;
+  --text-shadow: #000000;
+  
+  --cherry-pink: #ff6584;
+  --cherry-glow: rgba(255, 101, 132, 0.6);
+}
+
+/* Retro CRT Scanlines Overlay */
+.crt-scanlines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9990;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.25) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.03),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.03)
+  );
+  background-size: 100% 3px, 6px 100%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+[data-scanlines="true"] .crt-scanlines {
+  opacity: 0.65;
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
